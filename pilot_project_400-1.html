@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilot Project — 400 Cities: India, Asia &amp; Gulf</title>
+<style>
+  :root{
+    --ink:#0B1220; --panel:#111B2E; --panel-2:#0E1728;
+    --gold:#C9963A; --gold-soft:rgba(201,150,58,.14);
+    --teal:#0FB490; --teal-soft:rgba(15,180,144,.14);
+    --off:#EDEEF2; --slate:#8090A8; --hair:rgba(237,238,242,.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(201,150,58,.10), transparent 60%),
+      radial-gradient(1000px 500px at 105% 10%, rgba(15,180,144,.08), transparent 55%),
+      var(--ink);
+    color:var(--off);
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    line-height:1.5;
+  }
+  .sans{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .mono{ font-family: "SF Mono", "Courier New", Courier, monospace; letter-spacing:.02em; }
+  .wrap{ max-width:1100px; margin:0 auto; padding: 56px 24px 96px; }
+
+  header.hero{ border-bottom:1px solid var(--hair); padding-bottom:36px; margin-bottom:40px; }
+  .eyebrow{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; text-transform:uppercase; letter-spacing:.18em; font-size:11px; font-weight:700; color:var(--gold); display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .dot{ width:6px; height:6px; border-radius:50%; background:#4ade80; box-shadow:0 0 8px rgba(74,222,128,.7); }
+  h1{ font-size:2.6rem; margin:0 0 12px; font-weight:400; letter-spacing:-.01em; color:#fff; }
+  h1 em{ font-style:italic; color:var(--gold); }
+  .lede{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--slate); font-size:.98rem; max-width:680px; }
+
+  .kpi-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:36px 0 8px; }
+  .kpi{ background:var(--panel); border:1px solid var(--hair); border-radius:10px; padding:18px 16px; }
+  .kpi .label{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:10.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--slate); margin-bottom:8px; }
+  .kpi .value{ font-size:1.55rem; color:var(--gold); font-weight:600; font-family: Georgia, serif; }
+  .kpi .sub{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:11.5px; color:var(--slate); margin-top:6px; }
+
+  section{ margin-top:56px; }
+  .sec-eyebrow{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; text-transform:uppercase; letter-spacing:.14em; font-size:11px; font-weight:700; color:var(--teal); margin-bottom:6px; }
+  h2{ font-size:1.5rem; font-weight:400; color:#fff; margin:0 0 6px; }
+  .sec-note{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; color:var(--slate); font-size:.9rem; margin-bottom:26px; max-width:720px; }
+
+  .regions{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px; }
+  .region{ background:var(--panel); border:1px solid var(--hair); border-radius:10px; overflow:hidden; }
+  .region .tag{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.12em; font-weight:700; padding:10px 16px; color:#0B1220; display:flex; justify-content:space-between; align-items:center; }
+  .tag.india{ background:var(--gold); }
+  .tag.asia{ background:var(--teal); }
+  .tag.gulf{ background:#a78bfa; }
+  .region .body{ padding:16px 18px 20px; }
+  .region h3{ font-size:1.05rem; margin:0 0 4px; color:#fff; font-weight:400; }
+  .region .addr{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:.76rem; color:var(--slate); margin-bottom:10px; }
+  .region .cities-count{ font-size:1.8rem; color:#fff; font-weight:600; margin:4px 0; }
+  .region .cities-label{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--slate); }
+  .region .notes{ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:.8rem; color:var(--off); opacity:.85; margin-top:10px; }
+
+  .batch-table{ width:100%; border-collapse:collapse; font-size:.82rem; margin-bottom:8px; }
+  .batch-table thead th{ text-align:center; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--slate); font-weight:700; padding:10px 12px; border-bottom:1px solid var(--hair); }
+  .batch-table thead th:first-child{ text-align:left; }
+  .batch-table tbody td{ padding:10px 12px; text-align:center; border-bottom:1px solid var(--hair); color:var(--off); }
+  .batch-table tbody td:first-child{ text-align:left; color:#fff; font-weight:600; }
+  .batch-table tbody tr:nth-child(odd){ background:rgba(255,255,255,.015); }
+  .pill{ display:inline-block; padding:2px 9px; border-radius:20px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:.72rem; font-weight:700; }
+  .pill.india{ background:var(--gold-soft); color:var(--gold); }
+  .pill.asia{ background:var(--teal-soft); color:var(--teal); }
+  .pill.gulf{ background:rgba(167,139,250,.14); color:#a78bfa; }
+
+  table.fin{ width:100%; border-collapse:collapse; font-size:.78rem; }
+  table.fin thead th{ text-align:right; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:9.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--slate); font-weight:700; padding:9px 10px; border-bottom:1px solid var(--hair); }
+  table.fin thead th:first-child{ text-align:left; }
+  table.fin tbody td{ padding:7px 10px; text-align:right; border-bottom:1px solid var(--hair); color:var(--off); }
+  table.fin tbody td:first-child{ text-align:left; color:var(--slate); }
+  table.fin tbody tr:nth-child(odd){ background:rgba(255,255,255,.015); }
+  table.fin tbody tr.milestone td{ background:var(--gold-soft); color:#fff; font-weight:600; }
+  table.fin tbody tr.cleared td{ background:var(--teal-soft); color:#fff; font-weight:600; }
+
+  .assump{ background:var(--panel-2); border:1px solid var(--hair); border-radius:10px; padding:20px 22px; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:.85rem; color:var(--slate); }
+  .assump strong{ color:var(--off); }
+  .assump ul{ margin:10px 0 0; padding-left:18px; }
+  .assump li{ margin-bottom:5px; }
+
+  footer{ margin-top:64px; padding-top:24px; border-top:1px solid var(--hair); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; font-size:.72rem; color:var(--slate); line-height:1.7; }
+
+  @media (max-width: 900px){
+    .kpi-row{ grid-template-columns:repeat(2,1fr); }
+    .regions{ grid-template-columns:1fr; }
+    h1{ font-size:2rem; }
+    table.fin{ font-size:.68rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow"><span class="dot"></span>Pilot Project · 400 Cities</div>
+    <h1>India, <em>Asia</em> &amp; the Gulf</h1>
+    <p class="lede">A 400-city pilot rollout across three regions — built in five batches of 80 cities every 5 years, financed at a pace global capital markets could plausibly absorb, with revenue from earlier batches pooled to accelerate payoff of the whole program.</p>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="label">Total Pilot Capital</div>
+        <div class="value">$122.5T</div>
+        <div class="sub">400 cities × $306.25B, SBLC-financed at 3% pa</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Build Timeline</div>
+        <div class="value">25 Years</div>
+        <div class="sub">5 batches of 80 cities, one every 5 years</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Revenue at Full Ops</div>
+        <div class="value">$12.25T/yr</div>
+        <div class="sub">10% pa rental yield, all 400 cities operational</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Loan Fully Repaid</div>
+        <div class="value">Year 27</div>
+        <div class="sub">Pooled revenue sweep clears $122.5T in ~2 yrs post-build</div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="sec-eyebrow">Regional Allocation</div>
+    <h2>How the 400 cities are distributed</h2>
+    <p class="sec-note">Weighted toward India first (largest immediate land bank and government appetite for FSG-style guarantees), then Southeast Asia, then the Gulf — mirroring the site-readiness order established in the 3-city pilot.</p>
+
+    <div class="regions">
+      <div class="region">
+        <div class="tag india"><span>India · South Asia</span><span>50%</span></div>
+        <div class="body">
+          <div class="cities-count">200 <span class="cities-label">cities</span></div>
+          <h3>Anchor site: New Noida Smart City</h3>
+          <div class="addr">Dadri Bypass, Uttar Pradesh — Delhi-NCR corridor</div>
+          <div class="notes">Built across Batches 1–3 (Years 5–15). Largest allocation given population scale, existing state-backed smart-city zones, and NCR/expressway infrastructure already in place.</div>
+        </div>
+      </div>
+      <div class="region">
+        <div class="tag asia"><span>Southeast Asia</span><span>30%</span></div>
+        <div class="body">
+          <div class="cities-count">120 <span class="cities-label">cities</span></div>
+          <h3>Anchor site: Clark Freeport Zone</h3>
+          <div class="addr">Clark Freeport, Pampanga, Philippines</div>
+          <div class="notes">Built across Batches 3–4 (Years 15–20). Existing freeport/special-economic-zone frameworks across the Philippines, Vietnam, and Indonesia reduce permitting time.</div>
+        </div>
+      </div>
+      <div class="region">
+        <div class="tag gulf"><span>Gulf</span><span>20%</span></div>
+        <div class="body">
+          <div class="cities-count">80 <span class="cities-label">cities</span></div>
+          <h3>Anchor site: Dubai South</h3>
+          <div class="addr">Madinat Al Mataar, Dubai, UAE</div>
+          <div class="notes">Built in Batch 5 (Years 20–25). Sovereign wealth capacity and established aerotropolis-scale master-planning make the Gulf the highest-confidence final batch.</div>
+        </div>
+      </div>
+    </div>
+
+    <table class="batch-table">
+      <thead>
+        <tr><th>Batch</th><th>Year</th><th>Cities</th><th>India</th><th>SE Asia</th><th>Gulf</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Batch 1</td><td>Year 5</td><td>80</td><td><span class="pill india">80</span></td><td>—</td><td>—</td></tr>
+        <tr><td>Batch 2</td><td>Year 10</td><td>80</td><td><span class="pill india">80</span></td><td>—</td><td>—</td></tr>
+        <tr><td>Batch 3</td><td>Year 15</td><td>80</td><td><span class="pill india">40</span></td><td><span class="pill asia">40</span></td><td>—</td></tr>
+        <tr><td>Batch 4</td><td>Year 20</td><td>80</td><td>—</td><td><span class="pill asia">80</span></td><td>—</td></tr>
+        <tr><td>Batch 5</td><td>Year 25</td><td>80</td><td>—</td><td>—</td><td><span class="pill gulf">80</span></td></tr>
+        <tr style="font-weight:700;"><td>Total</td><td>25 yrs</td><td>400</td><td><span class="pill india">200</span></td><td><span class="pill asia">120</span></td><td><span class="pill gulf">80</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-eyebrow">Financial Model</div>
+    <h2>Year-by-year — build, revenue, pooled loan payoff</h2>
+    <p class="sec-note">Debt draws at each batch completion; 100% of revenue from all operating cities is swept to interest + principal on the pooled loan balance every year.</p>
+
+    <table class="fin">
+      <thead>
+        <tr>
+          <th>Year</th><th>New Draw ($B)</th><th>Cities (cum)</th><th>Capital Deployed ($B)</th>
+          <th>Revenue ($B)</th><th>Interest ($B)</th><th>Principal Paid ($B)</th><th>Debt Balance, EOY ($B)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>2</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>3</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td>4</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr class="milestone"><td>5 — Batch 1 complete</td><td>24,500.0</td><td>80</td><td>24,500.0</td><td>2,450.0</td><td>735.0</td><td>1,715.0</td><td>22,785.0</td></tr>
+        <tr><td>6</td><td>—</td><td>80</td><td>24,500.0</td><td>2,450.0</td><td>683.5</td><td>1,766.5</td><td>21,018.6</td></tr>
+        <tr><td>7</td><td>—</td><td>80</td><td>24,500.0</td><td>2,450.0</td><td>630.6</td><td>1,819.4</td><td>19,199.1</td></tr>
+        <tr><td>8</td><td>—</td><td>80</td><td>24,500.0</td><td>2,450.0</td><td>576.0</td><td>1,874.0</td><td>17,325.1</td></tr>
+        <tr><td>9</td><td>—</td><td>80</td><td>24,500.0</td><td>2,450.0</td><td>519.8</td><td>1,930.2</td><td>15,394.8</td></tr>
+        <tr class="milestone"><td>10 — Batch 2 complete</td><td>24,500.0</td><td>160</td><td>49,000.0</td><td>4,900.0</td><td>1,196.8</td><td>3,703.2</td><td>36,191.7</td></tr>
+        <tr><td>11</td><td>—</td><td>160</td><td>49,000.0</td><td>4,900.0</td><td>1,085.8</td><td>3,814.2</td><td>32,377.4</td></tr>
+        <tr><td>12</td><td>—</td><td>160</td><td>49,000.0</td><td>4,900.0</td><td>971.3</td><td>3,928.7</td><td>28,448.8</td></tr>
+        <tr><td>13</td><td>—</td><td>160</td><td>49,000.0</td><td>4,900.0</td><td>853.5</td><td>4,046.5</td><td>24,402.2</td></tr>
+        <tr><td>14</td><td>—</td><td>160</td><td>49,000.0</td><td>4,900.0</td><td>732.1</td><td>4,167.9</td><td>20,234.3</td></tr>
+        <tr class="milestone"><td>15 — Batch 3 complete</td><td>24,500.0</td><td>240</td><td>73,500.0</td><td>7,350.0</td><td>1,342.0</td><td>6,008.0</td><td>38,726.3</td></tr>
+        <tr><td>16</td><td>—</td><td>240</td><td>73,500.0</td><td>7,350.0</td><td>1,161.8</td><td>6,188.2</td><td>32,538.1</td></tr>
+        <tr><td>17</td><td>—</td><td>240</td><td>73,500.0</td><td>7,350.0</td><td>976.1</td><td>6,373.9</td><td>26,164.2</td></tr>
+        <tr><td>18</td><td>—</td><td>240</td><td>73,500.0</td><td>7,350.0</td><td>784.9</td><td>6,565.1</td><td>19,599.2</td></tr>
+        <tr><td>19</td><td>—</td><td>240</td><td>73,500.0</td><td>7,350.0</td><td>588.0</td><td>6,762.0</td><td>12,837.1</td></tr>
+        <tr class="milestone"><td>20 — Batch 4 complete</td><td>24,500.0</td><td>320</td><td>98,000.0</td><td>9,800.0</td><td>1,120.1</td><td>8,679.9</td><td>28,657.3</td></tr>
+        <tr><td>21</td><td>—</td><td>320</td><td>98,000.0</td><td>9,800.0</td><td>859.7</td><td>8,940.3</td><td>19,717.0</td></tr>
+        <tr><td>22</td><td>—</td><td>320</td><td>98,000.0</td><td>9,800.0</td><td>591.5</td><td>9,208.5</td><td>10,508.5</td></tr>
+        <tr><td>23</td><td>—</td><td>320</td><td>98,000.0</td><td>9,800.0</td><td>315.3</td><td>9,484.7</td><td>1,023.7</td></tr>
+        <tr><td>24</td><td>—</td><td>320</td><td>98,000.0</td><td>9,800.0</td><td>30.7</td><td>1,023.7</td><td>—</td></tr>
+        <tr class="milestone"><td>25 — Batch 5 complete</td><td>24,500.0</td><td>400</td><td>122,500.0</td><td>12,250.0</td><td>735.0</td><td>11,515.0</td><td>12,985.0</td></tr>
+        <tr><td>26</td><td>—</td><td>400</td><td>122,500.0</td><td>12,250.0</td><td>389.6</td><td>11,860.5</td><td>1,124.5</td></tr>
+        <tr class="cleared"><td>27 — debt cleared</td><td>—</td><td>400</td><td>122,500.0</td><td>12,250.0</td><td>33.7</td><td>1,124.5</td><td>0.0</td></tr>
+        <tr><td>28</td><td>—</td><td>400</td><td>122,500.0</td><td>12,250.0</td><td>—</td><td>—</td><td>0.0</td></tr>
+        <tr><td>29</td><td>—</td><td>400</td><td>122,500.0</td><td>12,250.0</td><td>—</td><td>—</td><td>0.0</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="assump">
+      <strong>Assumptions &amp; scope</strong>
+      <ul>
+        <li>400 cities, $306.25B each, built in 5 batches of 80 cities, one batch every 5 years across 25 years.</li>
+        <li>Regional split: India 200 (Batches 1–3), Southeast Asia 120 (Batches 3–4), Gulf 80 (Batch 5) — an illustrative sequencing choice, not a confirmed market allocation.</li>
+        <li>100% debt-financed via SBLC (sovereign-guarantee-backed), 3% pa interest, pooled across all batches — revenue from every operating city is swept to service the combined balance each year, which is what compresses full repayment from ~50 years (standalone-per-batch) to Year 27.</li>
+        <li>Rental revenue begins the year each batch completes, at 10% pa of that batch's invested capital, held flat (no growth modeled).</li>
+        <li>No construction contingency, land cost, or operating expense is modeled — this is a simplified illustrative payoff schedule, not a bankable term sheet.</li>
+        <li>This capital scale (~$4.9T/yr average draw) is still large relative to realistic global SBLC/MTN issuance capacity (see prior capital-market ceiling analysis) — treat as an aspirational upper-bound pilot, not a currently fundable plan.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Illustrative planning document only. All figures are forward-looking projections, not commitments, guarantees, or offers of any kind. No sovereign guarantee, SBLC, or construction agreement exists for any site or region listed. Regional allocations and anchor sites reflect publicly available information as of the document date and require independent verification before any capital commitment.
+  </footer>
+
+</div>
+</body>
+</html>
